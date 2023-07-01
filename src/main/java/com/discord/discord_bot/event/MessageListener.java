@@ -4,7 +4,12 @@ import com.discord.discord_bot.DicV2;
 import com.discord.discord_bot.Dictionary;
 import com.discord.discord_bot.Pokemon;
 import com.discord.discord_bot.PokemonV2;
+import com.discord.discord_bot.music_player.MusicPlayer;
+import discord4j.core.object.VoiceState;
+import discord4j.core.object.entity.Member;
 import discord4j.core.object.entity.Message;
+import discord4j.core.object.entity.channel.VoiceChannel;
+import discord4j.voice.VoiceConnection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.client.RestTemplate;
 import reactor.core.publisher.Mono;
@@ -16,15 +21,14 @@ public abstract class MessageListener {
 
     @Autowired
     private RestTemplate restTemplate;
-    private List<String> tasks = new ArrayList<>();
+
+    @Autowired
+    private MusicPlayer musicPlayer;
 
 
 
-    public MessageListener(){
-        tasks.add("sleep");
-        tasks.add("eat");
-        tasks.add("code");
-    }
+
+
 
     public Mono<Void> processCommand(Message eventMessage) {
         /*return Mono.just(eventMessage)
@@ -47,9 +51,23 @@ public abstract class MessageListener {
                         return message.getChannel().flatMap(channel -> channel.createMessage(poke(content)));
                     } else if (content.startsWith("!word:")) {
                         return message.getChannel().flatMap(channel -> channel.createMessage(dictionery(content)));
-                    } else if (content.startsWith("!customCommand:")) {
-                        // Handle custom command logic
-                        return Mono.empty(); // or any other desired result
+                    }else if (content.equalsIgnoreCase("!join")) {
+                        return message.getAuthorAsMember()
+                                .flatMap(member -> member.getVoiceState()
+                                        .flatMap(voiceState -> voiceState.getChannel()
+                                                .flatMap(voiceChannel -> {
+                                                    VoiceConnection voiceConnection = voiceChannel.join(spec -> spec.setProvider(musicPlayer.getAudioProvider())).block();
+
+                                                    return Mono.empty();
+                                                })
+                                        )
+                                );
+
+                    } else if (content.startsWith("!play")) {
+                        musicPlayer.playTrack("https://www.youtube.com/watch?v=kMiy8ZywF88&ab_channel=Mrwhosetheboss");
+                        System.out.println("hhghhghghghghgh");
+
+                        return Mono.empty();
                     } else {
                         // Unknown command, do nothing
                         return Mono.empty();
@@ -58,21 +76,7 @@ public abstract class MessageListener {
                 .then();
     }
 
-    public String game1(String word) {
-        char last = word.charAt(word.length()-1);
-        System.out.println(last);
-        char first = ' ';
-        for(String w : tasks) {
-            first = w.charAt(0);
-            System.out.println(first);
-            if(last == first) {
-                System.out.println(w);
-                return w;
-            }
-        }
 
-        return "you lose";
-    }
 
     public String poke(String pokemon) {
 
