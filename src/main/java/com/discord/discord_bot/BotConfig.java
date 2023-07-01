@@ -1,5 +1,9 @@
 package com.discord.discord_bot;
 
+import com.discord.discord_bot.music_player.MusicPlayer;
+import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
+import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
+import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import discord4j.core.DiscordClientBuilder;
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.domain.Event;
@@ -16,6 +20,15 @@ public class BotConfig {
     @Value("${token}")
     private String token;
 
+    @Bean
+    public AudioPlayerManager audioPlayerManager(){
+        return new DefaultAudioPlayerManager();
+    }
+
+    @Bean
+    public MusicPlayer musicPlayer(AudioPlayerManager audioPlayerManager) {
+        return new MusicPlayer(audioPlayerManager);
+    }
     @Bean
     public <T extends Event> GatewayDiscordClient gatewayDiscordClient(List<EventListener<T>> eventListenerList) {
         System.out.println(token);
