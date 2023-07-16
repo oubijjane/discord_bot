@@ -1,6 +1,6 @@
 package com.discord.discord_bot.event;
 
-import com.discord.discord_bot.Definition;
+import com.discord.discord_bot.dictionary.Definition;
 
 import java.util.List;
 

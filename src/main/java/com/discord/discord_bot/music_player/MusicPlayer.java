@@ -51,4 +51,7 @@ public class MusicPlayer {
             }
         });
     }
+    public void pauseTrack() {
+        audioPlayer.stopTrack();
+    }
 }

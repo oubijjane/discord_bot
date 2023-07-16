@@ -1,4 +1,4 @@
-package com.discord.discord_bot;
+package com.discord.discord_bot.dictionary;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ public class Definition {
     private String example;
 
     public Definition() {
-        System.out.println("!!!!!!!!!"+toString());
+
     }
 
     public Definition(String definition, String example) {

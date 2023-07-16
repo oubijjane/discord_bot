@@ -1,18 +1,18 @@
-package com.discord.discord_bot;
+package com.discord.discord_bot.pokemon;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class PokemonV2 {
+public class Pokemon {
 
     private List<Ability> abilities;
     private String weight;
 
-    public PokemonV2(){}
+    public Pokemon(){}
 
-    public PokemonV2(List<Ability> abilities, String weight) {
+    public Pokemon(List<Ability> abilities, String weight) {
         this.abilities = abilities;
         this.weight = weight;
     }

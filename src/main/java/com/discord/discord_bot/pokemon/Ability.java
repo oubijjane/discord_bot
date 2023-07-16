@@ -1,4 +1,4 @@
-package com.discord.discord_bot;
+package com.discord.discord_bot.pokemon;
 
 public class Ability {
 

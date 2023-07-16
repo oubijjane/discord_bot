@@ -1,4 +1,4 @@
-package com.discord.discord_bot;
+package com.discord.discord_bot.dictionary;
 
 import com.discord.discord_bot.event.Meaning;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

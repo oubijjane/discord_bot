@@ -1,21 +1,13 @@
 package com.discord.discord_bot.event;
 
-import com.discord.discord_bot.DicV2;
-import com.discord.discord_bot.Dictionary;
-import com.discord.discord_bot.Pokemon;
-import com.discord.discord_bot.PokemonV2;
+import com.discord.discord_bot.dictionary.Dictionary;
+import com.discord.discord_bot.pokemon.Pokemon;
 import com.discord.discord_bot.music_player.MusicPlayer;
-import discord4j.core.object.VoiceState;
-import discord4j.core.object.entity.Member;
 import discord4j.core.object.entity.Message;
-import discord4j.core.object.entity.channel.VoiceChannel;
 import discord4j.voice.VoiceConnection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.client.RestTemplate;
 import reactor.core.publisher.Mono;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public abstract class MessageListener {
 
@@ -63,9 +55,14 @@ public abstract class MessageListener {
                                         )
                                 );
 
-                    } else if (content.startsWith("!play")) {
-                        musicPlayer.playTrack("https://www.youtube.com/watch?v=kMiy8ZywF88&ab_channel=Mrwhosetheboss");
-                        System.out.println("hhghhghghghghgh");
+                    } else if (content.startsWith("!play;")) {
+                        String[] words = content.split(";");
+                        musicPlayer.playTrack(words[1]);
+
+                        return Mono.empty();
+                    } else if (content.startsWith("!pause")) {
+
+                        musicPlayer.pauseTrack();
 
                         return Mono.empty();
                     } else {
@@ -81,10 +78,10 @@ public abstract class MessageListener {
     public String poke(String pokemon) {
 
         String[] words = pokemon.split(":");
-        PokemonV2 pokemonV2;
+        Pokemon pokemonV2;
         try{
             pokemonV2 = restTemplate.getForObject(
-                "https://pokeapi.co/api/v2/pokemon/" + words[1], PokemonV2.class
+                "https://pokeapi.co/api/v2/pokemon/" + words[1], Pokemon.class
         );}
         catch (Exception e){
             System.out.println(e);
