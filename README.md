@@ -1,5 +1,6 @@
 # discord_bot
-this is a discord bot :
+this is a discord bot:
+
 -to search for words in an open source dictionary (https://api.dictionaryapi.dev/api/v2/entries/en/)
 by typing the command !word: + the word you want (!word:hello)
 
