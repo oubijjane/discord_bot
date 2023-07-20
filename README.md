@@ -8,4 +8,4 @@ by typing the command !word: + the word you want (!word:hello)
 
 -to play audio from YouTube video in audio channel with the command !join to join the same channel the user in and !play; + YouTube link(!play;https://youtu.be/dQw4w9WgXcQ) and !pause to pause the audio 
 
-to use this bot you need to put your bot token in src/main/resources/application.proerties
+to use this bot you need to put your bot token in src/main/resources/application.properties
